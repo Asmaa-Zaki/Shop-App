@@ -9,6 +9,7 @@ import 'package:shop_app/Shared/constants.dart';
 import 'package:shop_app/Shared/endpoints.dart';
 import '../../Models/CategoriesModel.dart';
 import '../../Models/LoginModel.dart';
+import '../../Shared/Components.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(ShopLLoginInitialState());
@@ -70,6 +71,7 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   void changeFavourites(int productId) {
+    emit(ShopLoadingFavScreen());
     favouritesProd[productId] = !favouritesProd[productId]!;
     print(favouritesProd[productId]);
     print(token);
@@ -115,10 +117,12 @@ class ShopCubit extends Cubit<ShopStates> {
   }
 
   void UpdateUser({String? name, String? phone, String? email}) {
+    emit(ShopLoadingUpdateScreen());
     DioHelper.putData(
         url: updateProfile,
         token: token,
         data: {"name": name, "phone": phone, "email": email}).then((value) {
+          getProfileData();
       emit(ShopSuccessUpdateScreen());
     }).catchError((onError) {
       emit(ShopFailUpdateScreen());
@@ -151,8 +155,10 @@ class ShopCubit extends Cubit<ShopStates> {
   void LogOut() {
     DioHelper.postData(url: logout, token: token).then((value) {
       LogoutMessage = value.data["message"];
-      userData = userSignUpData = null;
       CacheHelper.removeKey(key: "token");
+      buildShopToast(
+          message: LogoutMessage,
+          state: LoginState.success);
       emit(ShopSuccessLogoutScreen());
     }).catchError((onError) {
       emit(ShopFailLogoutScreen());

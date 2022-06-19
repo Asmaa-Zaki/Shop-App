@@ -1,4 +1,3 @@
-import 'package:shop_app/Models/HomeModel.dart';
 import 'package:shop_app/Models/LoginModel.dart';
 
 abstract class ShopStates{}
@@ -48,6 +47,8 @@ class ShopFailProfileScreen extends ShopStates{}
 class ShopSuccessLogoutScreen extends ShopStates{}
 
 class ShopFailLogoutScreen extends ShopStates{}
+
+class ShopLoadingUpdateScreen extends ShopStates{}
 
 class ShopSuccessUpdateScreen extends ShopStates{}
 

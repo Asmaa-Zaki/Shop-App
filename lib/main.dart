@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ShopCubit>(
-      create: (context){return ShopCubit()..loadHome()..loadCategories()..getFavourites()..getProfileData();},
+      create: (context){return ShopCubit();},
       child: BlocConsumer<ShopCubit, ShopStates>(
         builder: (context, states){
           return MaterialApp(

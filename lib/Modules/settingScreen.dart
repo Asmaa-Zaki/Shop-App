@@ -5,19 +5,17 @@ import 'package:shop_app/Modules/Block/Cubit.dart';
 import 'package:shop_app/Modules/Block/States.dart';
 import 'package:shop_app/Modules/LoginScreen.dart';
 import 'package:shop_app/Shared/Components.dart';
-
 import '../Shared/constants.dart';
 
 class SettingScreen extends StatelessWidget {
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    var nameController = TextEditingController();
-    var emailController = TextEditingController();
-    var phoneController = TextEditingController();
-
     return BlocConsumer<ShopCubit, ShopStates>(
         builder: (context, state) {
-          ShopCubit.get(context).getProfileData();
           nameController.text =
               ShopCubit.get(context).getProfile!.data!.name;
           emailController.text =
@@ -26,13 +24,16 @@ class SettingScreen extends StatelessWidget {
               ShopCubit.get(context).getProfile!.data!.phone;
 
           return ConditionalBuilder(
-              condition: ShopCubit.get(context).getProfile != null,
+              condition: state is !ShopLoadingProfileScreen,
               builder: (context) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 20),
                   child: Column(
                     children: [
+                      if(state is ShopLoadingUpdateScreen)
+                      LinearProgressIndicator(),
+                      SizedBox(height: 15,),
                       defaultTextFormField(
                           label: 'Name',
                           controller: nameController,
@@ -114,9 +115,7 @@ class SettingScreen extends StatelessWidget {
         listener: (context, state) => {
               if (state is ShopSuccessLogoutScreen)
                 {
-                  buildShopToast(
-                      message: "ShopCubit.get(context).LogoutMessage",
-                      state: LoginState.success)
+
                 }
             });
   }

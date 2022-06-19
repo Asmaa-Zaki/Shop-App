@@ -22,12 +22,11 @@ class _ShopLayoutState extends State<ShopLayout> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShopCubit, ShopStates>(
-      listener: (BuildContext context, state) {
-      },
+    return BlocProvider<ShopCubit>(
+        create: (context){return ShopCubit()..loadHome()..loadCategories()..getFavourites()..getProfileData();},
+    child: BlocConsumer<ShopCubit, ShopStates>(
       builder: (BuildContext context, Object? state) {
         List<Widget> pages = [ProductScreen(), CategoriesScreen(), FavouriteScreen(), SettingScreen()];
-
         return Scaffold(
         appBar: AppBar(
           backgroundColor: defaultColor,
@@ -60,8 +59,7 @@ class _ShopLayoutState extends State<ShopLayout> {
           },
         ),
       );},
-    );
-  }
+    listener: (context, states){},));}
 
   TextButton buildTextButton(BuildContext context) {
     return TextButton(
