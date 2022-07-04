@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/Models/HomeModel.dart';
+import 'package:shop_app/Models/SearchModel.dart';
 import 'package:shop_app/Models/favouritesModel.dart';
 import 'package:shop_app/Modules/Block/States.dart';
 import 'package:shop_app/Shared/Local/CacheHelper.dart';
@@ -18,6 +19,7 @@ class ShopCubit extends Cubit<ShopStates> {
   ShopHomeModel? homeData;
   CategoryModel? categoryModel;
   FavouritesModel? favouritesModel;
+  SearchModel? searchModel;
   Map<int, bool> favouritesProd = {};
   ShopUserModel? getProfile;
   late String LogoutMessage;
@@ -36,7 +38,7 @@ class ShopCubit extends Cubit<ShopStates> {
         .then((value) {
       userData = ShopUserModel.fromJson(value.data);
       print(userData?.data?.token);
-      token= userData?.data?.token;
+      token = userData?.data?.token;
       emit(ShopLLoginSuccessState(userData!));
     }).catchError((error) {
       print(error);
@@ -95,12 +97,27 @@ class ShopCubit extends Cubit<ShopStates> {
 
   void getFavourites() {
     DioHelper.getData(url: favorites, token: token).then((value) {
-      print(value.data);
+     // print(value.data["data"]["data"][0]);
       favouritesModel = FavouritesModel.fromJson(value.data);
       emit(ShopGetFavSuccessScreen());
     }).catchError((err) {
       print(err);
       emit(ShopGetFavFailScreen());
+    });
+  }
+
+  void getSearch({@required String? text}) {
+    emit(ShopSearchLoadScreen());
+    DioHelper.postData(url: search, data: {"text": text}).then((value) {
+     /* print(value.data["data"]["data"][1]["discount"]);
+      print("old");*/
+     // getFavourites();
+      searchModel= SearchModel.fromJson(value.data);
+      //print(searchModel?.data.data[0].name);
+      emit(ShopSearchSuccessScreen());
+    }).catchError((err) {
+      print(err);
+      emit(ShopSearchFailScreen());
     });
   }
 
@@ -122,7 +139,7 @@ class ShopCubit extends Cubit<ShopStates> {
         url: updateProfile,
         token: token,
         data: {"name": name, "phone": phone, "email": email}).then((value) {
-          getProfileData();
+      getProfileData();
       emit(ShopSuccessUpdateScreen());
     }).catchError((onError) {
       emit(ShopFailUpdateScreen());
@@ -134,7 +151,6 @@ class ShopCubit extends Cubit<ShopStates> {
       @required String? phone,
       @required String? email,
       @required String? password}) {
-    
     emit(ShopSignUpLoadingScreen());
     DioHelper.postData(url: register, data: {
       "name": name,
@@ -142,9 +158,9 @@ class ShopCubit extends Cubit<ShopStates> {
       "email": email,
       "password": password
     }).then((value) {
-      userSignUpData= ShopUserModel.fromJson(value.data);
+      userSignUpData = ShopUserModel.fromJson(value.data);
       print(userSignUpData?.status);
-      token= userSignUpData?.data?.token;
+      token = userSignUpData?.data?.token;
       emit(ShopSuccessSignUpScreen(userSignUpData!));
     }).catchError((onError) {
       emit(ShopFailSignUpScreen());
@@ -156,9 +172,7 @@ class ShopCubit extends Cubit<ShopStates> {
     DioHelper.postData(url: logout, token: token).then((value) {
       LogoutMessage = value.data["message"];
       CacheHelper.removeKey(key: "token");
-      buildShopToast(
-          message: LogoutMessage,
-          state: LoginState.success);
+      buildShopToast(message: LogoutMessage, state: LoginState.success);
       emit(ShopSuccessLogoutScreen());
     }).catchError((onError) {
       emit(ShopFailLogoutScreen());

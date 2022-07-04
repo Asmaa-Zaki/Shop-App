@@ -22,6 +22,12 @@ class ShopHomeSuccessScreen extends ShopStates{}
 
 class ShopHomeFailScreen extends ShopStates{}
 
+class ShopSearchLoadScreen extends ShopStates{}
+
+class ShopSearchSuccessScreen extends ShopStates{}
+
+class ShopSearchFailScreen extends ShopStates{}
+
 class ShopCatSuccessScreen extends ShopStates{}
 
 class ShopCatFailScreen extends ShopStates{}

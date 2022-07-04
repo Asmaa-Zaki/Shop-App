@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class DioHelper {
   static late Dio dio;
   static init() {
-    dio = Dio(BaseOptions(
+    dio = Dio(
+        BaseOptions(
         baseUrl: "https://student.valuxapps.com/api/",
         receiveDataWhenStatusError: true,
         /*headers: {}*/));

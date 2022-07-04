@@ -6,3 +6,4 @@ const profile= "profile";
 const logout= "logout";
 const updateProfile= "update-profile";
 const register= "register";
+const search= "products/search";
