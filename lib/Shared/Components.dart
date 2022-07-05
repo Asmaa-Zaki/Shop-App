@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/Models/SearchModel.dart';
 import '../Models/HomeModel.dart';
 import '../Modules/Block/Cubit.dart';
+import '../Modules/LoginScreen.dart';
+import 'Local/CacheHelper.dart';
 
 Widget buildOnBoard(String image, String text, BuildContext context) {
   return Column(
@@ -438,4 +440,11 @@ ListView buildSearchList(SearchModel model, bool favColor) {
         color: Colors.grey[200],
       ),
       itemCount: model.data.data.length);
+}
+
+void navigateToLogin(BuildContext context)
+{
+  CacheHelper.setData(key: "onBoardingOpened", value: true).then((value) =>
+      navigateAndReplace(context, LoginScreen())
+  );
 }

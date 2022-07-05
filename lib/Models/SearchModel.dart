@@ -27,18 +27,6 @@ class SearchData
   }
 }
 
-/*class SearchSubData
-{
-  late int id;
-  late FavouriteProduct product;
-
-  FavouriteSubData.fromJson(Map<String, dynamic> jsonData)
-  {
-    id= jsonData["id"];
-    product= FavouriteProduct.fromJson(jsonData["product"]);
-  }
-}*/
-
 class SearchSubData
 {
   late int id;

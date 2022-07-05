@@ -16,24 +16,23 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
         builder: (context, state) {
-          nameController.text =
-              ShopCubit.get(context).getProfile!.data!.name;
-          emailController.text =
-              ShopCubit.get(context).getProfile!.data!.email;
-          phoneController.text =
-              ShopCubit.get(context).getProfile!.data!.phone;
+          nameController.text = ShopCubit.get(context).getProfile!.data!.name;
+          emailController.text = ShopCubit.get(context).getProfile!.data!.email;
+          phoneController.text = ShopCubit.get(context).getProfile!.data!.phone;
 
           return ConditionalBuilder(
-              condition: state is !ShopLoadingProfileScreen,
+              condition: state is! ShopLoadingProfileScreen,
               builder: (context) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 20.0, horizontal: 20),
                   child: Column(
                     children: [
-                      if(state is ShopLoadingUpdateScreen)
-                      LinearProgressIndicator(),
-                      SizedBox(height: 15,),
+                      if (state is ShopLoadingUpdateScreen)
+                        const LinearProgressIndicator(),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       defaultTextFormField(
                           label: 'Name',
                           controller: nameController,
@@ -77,8 +76,8 @@ class SettingScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(defaultColor)
-                          ),
+                              backgroundColor:
+                                  MaterialStateProperty.all(defaultColor)),
                           onPressed: () {
                             ShopCubit.get(context).UpdateUser(
                                 name: nameController.text,
@@ -95,8 +94,8 @@ class SettingScreen extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(defaultColor)
-                          ),
+                              backgroundColor:
+                                  MaterialStateProperty.all(defaultColor)),
                           onPressed: () {
                             ShopCubit.get(context).LogOut();
                             navigateAndReplace(context, LoginScreen());
@@ -112,11 +111,7 @@ class SettingScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ));
         },
-        listener: (context, state) => {
-              if (state is ShopSuccessLogoutScreen)
-                {
-
-                }
-            });
+        listener: (context, state) =>
+            {if (state is ShopSuccessLogoutScreen) {}});
   }
 }

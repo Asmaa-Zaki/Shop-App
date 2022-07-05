@@ -25,7 +25,7 @@ class SignupScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 50,),
+                    const SizedBox(height: 50,),
                     const Text(
                       "Welcome!",
                       style: TextStyle(
@@ -40,7 +40,7 @@ class SignupScreen extends StatelessWidget {
                       "Please enter your data to continue",
                       style: TextStyle(color: Colors.black54),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     labelField("Username"),
@@ -55,7 +55,7 @@ class SignupScreen extends StatelessWidget {
                           }
                           return null;
                         }),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     labelField("Email"),
                     const SizedBox(height: 10,),
                     defaultTextFormField(
@@ -68,9 +68,9 @@ class SignupScreen extends StatelessWidget {
                           }
                           return null;
                         }),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     labelField("Phone"),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     defaultTextFormField(
                         prefix: Icons.phone,
                         label: "Phone",
@@ -81,9 +81,9 @@ class SignupScreen extends StatelessWidget {
                           }
                           return null;
                         }),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     labelField("Password"),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     defaultTextFormField(
                         prefix: Icons.lock,
                         label: "Password",
@@ -94,7 +94,7 @@ class SignupScreen extends StatelessWidget {
                           }
                           return null;
                         }),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     ConditionalBuilder(
                         condition: state is !ShopSignUpLoadingScreen,
                         builder: (context)=> ElevatedButton(onPressed: () {

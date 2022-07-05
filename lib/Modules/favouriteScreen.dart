@@ -16,7 +16,7 @@ class FavouriteScreen extends StatelessWidget {
             condition: state is !ShopLoadingFavScreen,
             builder: (context) => Container(
                 child: buildProductList(cubit, favColor)),
-            fallback: (context) => Center(child: CircularProgressIndicator())),
+            fallback: (context) => const Center(child: CircularProgressIndicator())),
         listener: (context, state){});
   }
 }
